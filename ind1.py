@@ -1,15 +1,13 @@
 from random import randint
 from time import sleep
-
+from collections import Counter
 
 def y_n(text: str) -> bool:
-    ans = input(text).lower()
-    while ans not in ("y", "n"):
-        print("Некорректный ввод")
+    while True:
         ans = input(text).lower()
-    if ans == "y":
-        return True
-    return False
+        if ans in ("y", "n"):
+            return ans
+        print("Некорректный ввод")
 
 
 num = randint(1000, 9999)
@@ -26,14 +24,9 @@ print()
 sleep(1)
 
 atts = []
-print(num)
 previous = []
 
 while True:
-    cows = 0
-    bulls = 0
-    used_j = []
-    used_i = []
     try:
         guess = int(input("Введите число: "))
         if not (1000 <= guess <= 9999):
@@ -62,23 +55,18 @@ while True:
         ans = y_n("Сыграть еще раз? (y/n): ")
         if ans:
             num = randint(1000, 9999)
-            print(num)
             atts = []
             print("Тогда играем еще раз.")
         else:
             break
 
     else:
-        for i, digit in enumerate(str(num)):
-            for j, r_digit in enumerate(str(guess)):
-                if j not in used_j and i not in used_i:
-                    if digit == r_digit and i == j:
-                        bulls += 1
-                        used_j.append(j)
-                        used_i.append(i)
-                    elif digit == r_digit:
-                        cows += 1
-                        used_j.append(j)
-                        used_i.append(i)
+        num_s = str(num)
+        guess_s = str(guess)
+        c_num = Counter(num_s)
+        c_guess = Counter(guess_s)
+        total = sum([min(c_num[d], c_guess[d]) for d in c_num])
+
+        bulls = sum([a == b for a, b in zip(str(guess_s), str(num_s))])
+        cows = total - bulls
         print(f"Коровы: {cows}\nБыки: {bulls}\n")
-# fds
