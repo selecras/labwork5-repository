@@ -1,6 +1,3 @@
-from decimal import Decimal
-
-
 def factorial(num: int) -> int:
     res = 1
     for i in range(1, num + 1):
@@ -8,10 +5,10 @@ def factorial(num: int) -> int:
     return res
 
 
-def get_e(accuracy: int) -> Decimal:
+def get_e(accuracy: int) -> float:
     e = 1
     for i in range(1, accuracy + 1):
-        e += Decimal(1) / Decimal(factorial(i))
+        e += 1 / factorial(i)
     return e
 
 

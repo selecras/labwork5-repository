@@ -28,6 +28,9 @@ elif ans == "2":
 
             a = int(input("Введите нижнюю границу: "))
             b = int(input("Введите верхнюю границу: "))
+            if a >= b:
+                raise ValueError
+
             break
         except ValueError:
             print("Некорректный ввод")
@@ -46,7 +49,7 @@ print()
 
 low = 0
 high = len(lst)
-while low != high:
+while low <= high:
     mid = (low + high) // 2
     elem = lst[mid]
     if elem == to_find:
